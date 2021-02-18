@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
+import axios from '../config/axios'
 import Swal from 'sweetalert2'
-// import router from '../router/index'
+import router from '../router/index'
 
 Vue.use(Vuex)
 
@@ -25,14 +25,24 @@ export default new Vuex.Store({
           username
         }
       })
-        .then(response => {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Register Successfully with name ' + response.data.username,
-            showConfirmButton: false,
-            timer: 1500
-          })
+        .then(({ data }) => {
+          if (data.errors) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'please insert username'
+            })
+          } else {
+            console.log(data, '<<<<<<<<<<<<<<<<<')
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Register Successfully with name ' + data.username,
+              showConfirmButton: false,
+              timer: 1500
+            })
+            router.push('/home')
+          }
         })
         .catch(error => {
           Swal.fire({
