@@ -10,7 +10,8 @@ export default new Vuex.Store({
   state: {
     stories: [],
     isPlay: false,
-    tempSentences: []
+    tempSentences: [],
+    sentencesSocket: []
   },
   mutations: {
     setStories (state, payload) {
@@ -19,8 +20,17 @@ export default new Vuex.Store({
     setIsPlay (state, payload) {
       state.isPlay = payload
     },
+    setSentencesApa (state, payload) {
+      state.tempSentences = payload
+    },
     setSentences (state, payload) {
       state.tempSentences.push(payload)
+    },
+    setSocket (state, payload) {
+      state.sentencesSocket = payload
+    },
+    addSocket (state, payload) {
+      state.sentencesSocket.push(payload)
     }
   },
   actions: {
@@ -126,6 +136,12 @@ export default new Vuex.Store({
     },
     addSentences (context, payload) {
       context.commit('setSentences', payload)
+    },
+    SOCKET_init (context, messages) {
+      context.commit('setSentencesApa', messages)
+    },
+    SOCKET_serverMessage (context, newMessage) {
+      context.commit('setSentences', newMessage)
     }
   },
   modules: {
