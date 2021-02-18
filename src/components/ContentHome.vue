@@ -1,20 +1,30 @@
 <template>
-  <div v-show="showContent" class="col-8 bg-warning rounded shadow overflow-scroll" style="height: 500px;">
+  <div v-show="showContent === false" class="col-8 bg-warning rounded shadow overflow-scroll" style="height: 500px;">
     <div class="container-fluid align-items-center d-flex justify-content-center bg-dark text-white">
       <h3>History Story</h3>
     </div>
-    <div class="m-2 bg-success rounded shadow">
-      <p class="p-3 m-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut doloremque pariatur cupiditate quasi praesentium accusantium incidunt, eos cumque fuga, excepturi alias, veniam ab aut quam sapiente quia animi consectetur ipsa nisi aperiam reprehenderit. Quidem impedit, temporibus modi, odit nisi veritatis doloremque praesentium, quod esse enim vel quo consectetur repellendus optio provident distinctio eaque neque laudantium totam sapiente accusantium suscipit soluta? Ad quam mollitia magni, dolorem labore repellendus nemo ipsa, beatae rerum ut vero provident pariatur, alias autem vitae facere earum! Laudantium ipsum voluptatem animi ipsa saepe. Ab, facilis architecto, incidunt eveniet officiis et error dolore saepe deserunt adipisci consequatur voluptatum!</p>
+    <div class="m-2 bg-success rounded shadow" v-for="story in dataStory" :key="story.id">
+      <h6>{{ story.title }}</h6>
+      <p class="p-3 m-2">
+        {{ story.sentences }}
+      </p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'ContentHome',
   computed: {
     showContent () {
-      return this.$store.state.isActive
+      return this.$store.state.isPlay
+    },
+    dataStory () {
+      return this.$store.state.stories
     }
+  },
+  created () {
+    this.$store.dispatch('fetchStory')
   }
 }
 </script>

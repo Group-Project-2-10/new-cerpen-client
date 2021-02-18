@@ -18,6 +18,9 @@ export default new Vuex.Store({
     },
     setIsPlay (state, payload) {
       state.isPlay = payload
+    },
+    setSentences (state, payload) {
+      state.tempSentences.push(payload)
     }
   },
   actions: {
@@ -90,11 +93,12 @@ export default new Vuex.Store({
           sentences
         }
       })
-        .then(response => {
+        .then(({ data }) => {
+          console.log(data)
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Success add Product ' + response.data.name,
+            title: 'Success add Story ' + data,
             showConfirmButton: false,
             timer: 1500
           })
@@ -119,6 +123,9 @@ export default new Vuex.Store({
       // component Content Home hide
       // else jika telah selesai v-model="play" === false
       // balik ke component Content home dengan fetch Data yg telah diupdate
+    },
+    addSentences (context, payload) {
+      context.commit('setSentences', payload)
     }
   },
   modules: {
