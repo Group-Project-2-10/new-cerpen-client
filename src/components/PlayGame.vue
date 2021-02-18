@@ -29,6 +29,7 @@ export default {
           title: 'Story',
           sentences: tmp
         })
+        this.$store.dispatch('isActive', false)
       }
     },
     hapusSentences () {
