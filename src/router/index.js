@@ -1,14 +1,22 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import register from '../views/register.vue'
+import home from '../views/home'
+import register from '../views/register'
+
 Vue.use(VueRouter)
 
-const routes = [{
-  path: '/register',
-  name: 'register',
-  component: register
-}]
-
+const routes = [
+  {
+    path: '/',
+    name: 'register',
+    component: register
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: home
+  }
+]
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
