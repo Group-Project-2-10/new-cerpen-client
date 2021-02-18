@@ -1,5 +1,5 @@
 <template>
-  <div v-show="showContent" class="col-8 bg-warning rounded shadow overflow-scroll" style="height: 500px;">
+  <div v-show="showContent === false" class="col-8 bg-warning rounded shadow overflow-scroll" style="height: 500px;">
     <div class="container-fluid align-items-center d-flex justify-content-center bg-dark text-white">
       <h3>History Story</h3>
     </div>
@@ -13,7 +13,7 @@
 export default {
   computed: {
     showContent () {
-      return this.$store.state.isActive
+      return this.$store.state.isPlay
     }
   }
 }
