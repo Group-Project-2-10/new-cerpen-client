@@ -8,11 +8,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    stories: []
+    stories: [],
+    isPlay: false,
+    tempSentences: []
   },
   mutations: {
     setStories (state, payload) {
       state.stories = payload
+    },
+    setIsPlay (state, payload) {
+      state.isPlay = payload
     }
   },
   actions: {
@@ -105,7 +110,8 @@ export default new Vuex.Store({
           })
         })
     },
-    isActive (_, payload) {
+    isActive (context, payload) {
+      context.commit('setIsPlay', payload)
       // bingung isactive ketika button playgame dijalankan
       // jika button dijalankan v-model="play" == true
       // maka:
