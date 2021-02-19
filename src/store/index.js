@@ -12,9 +12,14 @@ export default new Vuex.Store({
     isPlay: false,
     tempSentences: [],
     sentencesSocket: [],
-    currentUserId: 0
+    currentUserId: 0,
+    isTurn: false,
+    players: []
   },
   mutations: {
+    setPlayers (state, payload) {
+      state.players.push(payload)
+    },
     setStories (state, payload) {
       state.stories = payload
     },
@@ -32,6 +37,10 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    logout (context) {
+      localStorage.clear()
+      router.push('/')
+    },
     register (context, payload) {
       const { username } = payload
       axios({
@@ -50,7 +59,6 @@ export default new Vuex.Store({
               title: 'Oops...',
               text: 'please insert username'
             })
-            context.commit('setCurrentUserId', data.id)
           } else {
             console.log(data, '<<<<<<<<<<<<<<<<<')
             Swal.fire({
@@ -60,6 +68,9 @@ export default new Vuex.Store({
               showConfirmButton: false,
               timer: 1500
             })
+            context.commit('setCurrentUserId', data.id)
+            context.commit('setPlayers', data.username)
+            console.log(context.state.players, 'ini player>>>>>>>>>>>>>>>>')
             router.push('/home')
           }
         })
