@@ -3,7 +3,7 @@ import VueSocketIO from 'vue-socket.io'
 import store from '../store'
 
 const socket = new VueSocketIO({
-  connection: 'http://localhost:3000/',
+  connection: 'https://cerpen-diy.herokuapp.com/',
   debug: true,
   vuex: {
     store,

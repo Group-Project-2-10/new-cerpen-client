@@ -1,19 +1,17 @@
 <template>
-  <div v-if="showPlay" class="col-8 bg-warning rounded shadow overflow-scroll" style="height: 500px;">
+  <div v-if="showPlay" class="col-8 bg-dark rounded shadow overflow-scroll" style="height: 500px;">
     <form action="" class="d-flex justify-content-center" @submit.prevent="addSentences();hapusSentences()">
         <input type="text" class="form-control m-4" v-model="sentences">
         <button type="submit" class="form-control m-4" style="width: 200px">Submit</button>
     </form>
-    <div class="m-3 bg-success rounded shadow overflow-scroll" style="height: auto">
+    <div class="m-3 rounded shadow overflow-scroll" style="height: auto;background:rgba(0, 0, 0, 0.15)">
       <!-- <p class="p-3 m-2" v-for="(sentence, index) in sentencesArr" :key="index">{{ sentence }}</p> -->
-      <p>{{ username }}</p>
-      <p class="p-3 m-2">{{ tempSentences.join('. ') }}</p>
+      <p class="p-3 m-2 text-white">{{ tempSentences.join('. ') }}</p>
     </div>
   </div>
 </template>
 
 <script>
-import Swal from 'sweetalert2'
 export default {
   name: 'PlayGame',
   data () {
@@ -73,17 +71,6 @@ export default {
     },
     serverMessage (data) {
       this.sentencesArr.push(data)
-    },
-    gameFinished (flag) {
-      this.$store.dispatch('isActive', !flag)
-      this.$store.dispatch('fetchStory')
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Game Finished',
-        showConfirmButton: false,
-        timer: 1500
-      })
     }
   }
 }
