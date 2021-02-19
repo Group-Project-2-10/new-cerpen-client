@@ -31,6 +31,14 @@ export default {
   methods: {
     isActive (payload) {
       this.$store.dispatch('isActive', payload)
+      if (payload) {
+        this.$socket.emit('gameStart', true)
+      }
+    }
+  },
+  sockets: {
+    gameStart (flag) {
+      this.$store.dispatch('isActive', flag)
     }
   }
 }
