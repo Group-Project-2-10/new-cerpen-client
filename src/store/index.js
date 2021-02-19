@@ -37,6 +37,17 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    SOCKET_gameFinished (context, flag) {
+      context.dispatch('isActive', !flag)
+      context.dispatch('fetchStory')
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Game Finished',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    },
     logout (context) {
       localStorage.clear()
       router.push('/')
