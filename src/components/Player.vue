@@ -6,7 +6,7 @@
           <img src="../assets/logo.png" alt="userpicture" class="img-fluid"  style="max-width: 50px;">
         </div>
         <div class="">
-          <h5 class="align-middle" style="margin-top: 14px;">Rimbalun</h5>
+          <h5 class="align-middle" style="margin-top: 14px;">{{ player }}</h5>
         </div>
         <div class="d-flex flex-column align-items-end">
         </div>
@@ -17,7 +17,16 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      player: localStorage.getItem('username')
+    }
+  },
+  computed: {
+    players () {
+      return this.$store.state.players
+    }
+  }
 }
 </script>
 
