@@ -10,7 +10,9 @@ export default new Vuex.Store({
   state: {
     stories: [],
     isPlay: false,
-    tempSentences: []
+    tempSentences: [],
+    sentencesSocket: [],
+    currentUserId: 0
   },
   mutations: {
     setStories (state, payload) {
@@ -21,6 +23,12 @@ export default new Vuex.Store({
     },
     setSentences (state, payload) {
       state.tempSentences.push(payload)
+    },
+    resetSentences (state) {
+      state.tempSentences = []
+    },
+    setCurrentUserId (state, payload) {
+      state.currentUserId = payload
     }
   },
   actions: {
@@ -34,12 +42,15 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          localStorage.setItem('userId', data.id)
+          localStorage.setItem('username', data.username)
           if (data.errors) {
             Swal.fire({
               icon: 'error',
               title: 'Oops...',
               text: 'please insert username'
             })
+            context.commit('setCurrentUserId', data.id)
           } else {
             console.log(data, '<<<<<<<<<<<<<<<<<')
             Swal.fire({
@@ -90,15 +101,16 @@ export default new Vuex.Store({
         url: 'story',
         data: {
           title,
-          sentences
+          sentences: sentences.join('. '),
+          UserId: localStorage.getItem('userId')
         }
       })
         .then(({ data }) => {
-          console.log(data)
+          console.log(data, ' check sotry user')
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Success add Story ' + data,
+            title: 'Game Finished',
             showConfirmButton: false,
             timer: 1500
           })
@@ -126,6 +138,15 @@ export default new Vuex.Store({
     },
     addSentences (context, payload) {
       context.commit('setSentences', payload)
+    },
+    doResetSentences (context) {
+      context.commit('resetSentences')
+    },
+    SOCKET_init (context, messages) {
+      context.commit('setSentencesApa', messages)
+    },
+    SOCKET_serverMessage (context, newMessage) {
+      context.commit('setSentences', newMessage)
     }
   },
   modules: {
